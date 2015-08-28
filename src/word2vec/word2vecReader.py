@@ -260,6 +260,18 @@ class Word2Vec:
         result = [(self.index2word[sim], float(dists[sim],)) for sim in best if sim not in all_words]
         return result[:topn]
     
+    def get_sentence_vec(self, sentence):
+        assert isinstance(sentence, list)
+        # sum the vectors of the individual words
+        vec = zeros((self.layer1_size,))
+        for w in sentence:
+            if w in self.vocab: vec += self[w]
+        # normalize to unit length
+        length = linalg.norm(vec)
+        if length != 0.0:
+            vec = vec / length
+        return vec
+    
 if __name__ == "__main__":
 
     model_path = "./word2vec_twitter_model.bin"
