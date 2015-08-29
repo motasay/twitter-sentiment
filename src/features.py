@@ -103,11 +103,6 @@ def get_linguistic_features(sentence):
     if '|||HASHTAG|||' in preprocessed:
         features[7] = 1
     
-    # normalise to unit length
-    length = np.linalg.norm(features)
-    if length != 0.0:
-        features = [x/length for x in features]
-    
     return np.asarray(features, dtype=np.float32)
         
 def is_elongated(word):
